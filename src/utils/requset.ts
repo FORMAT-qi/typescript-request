@@ -19,7 +19,6 @@ const codeMessage:any = {
     504: '网关超时。',
   };
 
-  
 /**
  * 异常处理
  */
@@ -44,27 +43,61 @@ const errorHandler = (error: {response: Response}): Response => {
     }
     return response;
 }
+
+
+/****************************** http ******************************/
+/** 获取请求头 */
+const postHeaders = {
+    "Duliday-Agent": "4",
+    "Duliday-Agent-Version": (0x020000).toString(),
+    "Accept": "application/json",
+    "Content-Type": "application/json",
+    "Duliday-Token": localStorage.getItem("Duliday-Token") || ''
+};
+const getHeaders = {
+	'Content-Type': 'application/x-www-form-urlencoded',
+    "Duliday-Agent": "4",
+    "Duliday-Agent-Version": (0x020000).toString() ,
+    "Accept": "application/json",
+    "Duliday-Token": localStorage.getItem("Duliday-Token") || ''
+};
+
+
 /**
  * 配置resquest请求是的默认参数
  */
-const requset = extend({
-   
+const request = extend({
     errorHandler,// 默认错误处理
     // credentials: 'include', // 默认请求是否带上cookie
 })
 
-requset.interceptors.request.use((url,options) => {
-    const token = "123123";
+
+request.interceptors.request.use((url,options) => {
+
+    const header =  options.method === "post"? postHeaders : getHeaders;
     return {
         url:`${url}`,
         options:{
             ...PushSubscriptionOptions,
             headers: {
+                ...header,
                 ...options.headers,
-                Authorization: `Bearer ${token}`,
             }
         }
     }
 });
 
-export default requset;
+// response拦截器, 处理response
+
+request.interceptors.response.use(async(response) => {
+    console.log('=======request====begin=======')
+    console.log(response.url, await response.clone().json())
+    console.log('=======request====end=========')
+    if(response.status !== 200){
+        errorHandler({response:response})
+    }
+    return response;
+});
+
+
+export default request;

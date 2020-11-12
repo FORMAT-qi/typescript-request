@@ -1,22 +1,21 @@
-import React from 'react';
+import React, { useState }from 'react';
 import logo from './logo.svg';
 import './App.css';
+import {getRiskFileAllTypeList} from './services/ToolService';
+import FileTypeModel from 'model/FileTypeModel';
 
-const buttonClick = () =>{
-    
-}
+
 function App() {
+  const  [dataList, setDataListData] =  useState<FileTypeModel[]>([]);
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <button onClick={buttonClick}></button>
-      </header>
+       <button onClick={ async ()=> {
+          setDataListData(await getRiskFileAllTypeList({"sort":"", "time":"", "key":""}));
+       }}>点击</button>
+       {dataList&&dataList.map(item => (<span key={item.id} style={{color:"red"}}>{item.typeName}</span> ))}
     </div>
   );
+  
 }
 
 export default App;

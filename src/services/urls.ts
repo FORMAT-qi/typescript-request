@@ -1,3 +1,8 @@
 import config from '../config/index'
 
-export const getCurrentUserPath  = '/api/v1/user/currentUser';
+const riskPrefix = config.riskPrefix;
+
+/**
+ * 获取全部文件类型
+ */
+export const getRiskFileAllTypePath = `${riskPrefix}/api/evidence/v1/materialType/listMaterialTypeTree`;
