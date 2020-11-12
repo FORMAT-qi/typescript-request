@@ -32,17 +32,10 @@ export function getRiskFileAllTypeList(parmas:JokeListParams):Promise<any> {
                 message.error(res.msg)
                 return;
             }
-            // res.datas = res.datas.map((item: { name: string; typeName:string }) =>{
-            //     item["name"] = "你好"
-            //     return item;
-            // } )
-            // res.datas = [{
-            //     id : "1",
-            //     typeName:"数据1"
-            // },{
-            //     id : "2",
-            //     typeName:"数据2"
-            // }]
+            res.datas = res.datas.map((item: { status: number}) =>{
+                item["status"] = 1;
+                return item;
+            } )
         
             const list: FileTypeModel[] = res.datas.map(FileTypeModel.fromJson);
             console.log('list', list)
