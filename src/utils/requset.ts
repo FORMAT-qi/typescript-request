@@ -78,7 +78,7 @@ request.interceptors.request.use((url,options) => {
     return {
         url:`${url}`,
         options:{
-            ...PushSubscriptionOptions,
+            ...options,
             headers: {
                 ...header,
                 ...options.headers,

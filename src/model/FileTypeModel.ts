@@ -1,5 +1,3 @@
-
-
 type JsonObject = { [key: string]: any };
 
 enum FileTypeStatus {
@@ -26,14 +24,16 @@ class FileTypeModel {
       readonly typeName: string,
       readonly updateTime: string,
       readonly createTime: string,
-      readonly age: number,
       public materialTypeDTOList: FileTypeModel[],
+      readonly  selected:boolean,
       public status: number,
       public statusText: string,
     ) {
-      this.materialTypeDTOList = materialTypeDTOList&&materialTypeDTOList.map(FileTypeModel.fromJson);
+      this.materialTypeDTOList = materialTypeDTOList.map(FileTypeModel.fromJson);
       this.statusText =  formatFileTypeStatus(status);
     }
+
+   
 
    static fromJson(json: JsonObject): FileTypeModel {
       return new FileTypeModel(
@@ -44,12 +44,13 @@ class FileTypeModel {
         json.typeName || null,
         json.updateTime || null,
         json.createTime || null,
-        json.age || null,
-        json.materialTypeDTOList || null,
+        json.materialTypeDTOList || [],
+        json.selected || false,
         json.status || null,
         json.statusText || null,
       );
     }
 
   }
+  
 export default FileTypeModel
