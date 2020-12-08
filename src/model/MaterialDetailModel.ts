@@ -13,7 +13,7 @@ export interface MaterialDetailModel {
 	cabinetNo: string;
 	created: string;
 	data: Data;
-	fileName: string;
+	fileName: string; 
 	fileUrl: string;
 	id: string;
 	operationUserId: string;
