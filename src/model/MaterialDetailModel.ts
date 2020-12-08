@@ -3,7 +3,7 @@
 interface Data {
 	customerId: string;
 	beginDate: string;
-	remark: string;
+	remark: string; 
 	endDate: string;
 	contractNo: string;
 	customerName: string;
